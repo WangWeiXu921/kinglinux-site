@@ -158,18 +158,21 @@ section{scroll-margin-top:74px}
 .tree{
   font-family:var(--mono);font-size:13px;line-height:2;
   background:#120f16;border:1px solid var(--line-strong);border-radius:var(--radius);
-  padding:18px 18px 20px;overflow-x:auto;
+  padding:18px 18px 20px;overflow-x:auto;min-width:0;
 }
 .tree b{color:var(--accent);font-weight:600}
+.tree .row{display:flex;gap:10px;white-space:pre}
+.tree .lbl{flex:1;min-width:0}
+.tree .cnt{color:var(--ink-3);text-align:right;flex:0 0 auto}
 .tree .k{color:var(--ink)}
 .tree .c{color:var(--ink-3)}
 .tree .n{color:var(--blue)}
-.tree .row{white-space:pre}
 
 /* 特性列表 */
-.feat{display:grid;gap:16px;margin-top:30px}
-.feat-item{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;
+.feat{display:grid;gap:16px;margin-top:30px;min-width:0}
+.feat-item{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;min-width:0;
   background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px}
+.feat-item > *{min-width:0}
 .feat-item .num{
   font-family:var(--mono);font-size:13px;color:var(--accent);
   border:1px solid rgba(255,122,61,.34);border-radius:8px;height:30px;display:grid;place-items:center;
@@ -178,18 +181,20 @@ section{scroll-margin-top:74px}
 .feat-item p{margin-top:5px;font-size:13.5px;color:var(--ink-2)}
 
 /* 命令块演示 */
+.code-wrap{position:relative;max-width:100%;min-width:0}
 .code{
-  font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d7e1ee;
+  font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#d7e1ee;
   background:#0c0a10;border:1px solid var(--line-strong);border-radius:12px;
-  padding:16px 18px;overflow-x:auto;position:relative;
+  padding:16px 18px;overflow-x:auto;max-width:100%;
+  white-space:pre;
 }
 .code .c{color:#7d8598}
 .code .p{color:var(--accent)}
-.code .copy{
-  position:absolute;top:10px;right:10px;font-family:inherit;font-size:11px;
+.code-wrap .copy{
+  position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:11px;
   color:#c9c2ba;background:#241f2b;border:1px solid var(--line-strong);border-radius:6px;padding:2px 8px;cursor:pointer;
 }
-.code .copy:hover{color:#fff;border-color:var(--accent)}
+.code-wrap .copy:hover{color:#fff;border-color:var(--accent)}
 
 /* ---------- 下载 ---------- */
 .dl{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -216,6 +221,7 @@ section{scroll-margin-top:74px}
   background:var(--accent-soft);border:1px solid rgba(255,122,61,.3);color:var(--accent);
   font-family:var(--mono);font-size:11.5px;display:grid;place-items:center;
 }
+.dl-tip{margin-top:18px;font-size:12.5px;color:var(--ink-3);line-height:1.7;border-top:1px dashed var(--line);padding-top:12px}
 
 /* ---------- FAQ ---------- */
 .faq{display:grid;gap:10px;margin-top:30px}
@@ -244,6 +250,10 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
 .copy-line{margin-top:26px;font-size:12.5px;color:var(--ink-3)}
 
 /* ---------- 响应式 ---------- */
+@media (max-width:559px){
+  .ver-chip{display:none}
+  .hero h1{font-size:29px}
+}
 @media (min-width:560px){
   .hero h1{font-size:38px}
   .shot-pair{grid-template-columns:1fr 1fr}
@@ -260,6 +270,8 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
   .grid{grid-template-columns:repeat(3,1fr);gap:16px}
   .tree-wrap{grid-template-columns:1fr 1fr;align-items:start}
   .feat{grid-template-columns:1fr 1fr}
+  .feat-3{grid-template-columns:repeat(3,1fr)}
+  .feat-item.wide{grid-column:1 / -1}
   .dl-card{padding:32px 30px}
   .dl-main h3{font-size:24px}
 }
@@ -414,17 +426,17 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
     <div class="tree-wrap">
       <div class="tree" role="img" aria-label="KingLinux 左侧目录结构示例">
         <div class="row"><b>KingLinux</b></div>
-<div class="row">├─ <span class="k">入门基础</span>          <span class="c">14 章</span></div>
-<div class="row">├─ <span class="k">Shell 编程精讲</span>     <span class="c">14 章</span></div>
-<div class="row">├─ <span class="k">Python 自动化</span>      <span class="c">13 章</span></div>
-<div class="row">├─ <span class="k">数据库专栏</span></div>
-<div class="row">│   ├─ MySQL <span class="c">·</span> Oracle <span class="c">·</span> PostgreSQL</div>
-<div class="row">│   ├─ SQL Server <span class="c">·</span> 达梦 <span class="c">·</span> Redis</div>
-<div class="row">│   └─ <span class="c">安装 / 建库 / 备份 / 主从 / 调优</span></div>
-<div class="row">├─ <span class="k">核心能力</span>          <span class="c">SRE · 架构 · 项目管理</span></div>
-<div class="row">├─ <span class="k">学习专栏</span>          <span class="n">Day 1 – 100</span></div>
-<div class="row">├─ <span class="k">服务专栏</span>          <span class="c">78 个服务</span></div>
-<div class="row">└─ <span class="k">更多</span>              <span class="c">面试题 · 认证 · 综合实验</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ 入门基础</span></span><span class="cnt">14 章</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ Shell 编程精讲</span></span><span class="cnt">14 章</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ Python 自动化</span></span><span class="cnt">13 章</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ 数据库专栏</span></span><span class="cnt">6 种</span></div>
+        <div class="row"><span class="lbl"><span class="c">│  ├─ MySQL · Oracle · PostgreSQL</span></span></div>
+        <div class="row"><span class="lbl"><span class="c">│  ├─ SQL Server · 达梦 · Redis</span></span></div>
+        <div class="row"><span class="lbl"><span class="c">│  └─ 安装 / 建库 / 备份 / 主从 / 调优</span></span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ 核心能力</span></span><span class="cnt">SRE · 架构</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ 学习专栏</span></span><span class="cnt n">Day 1 – 100</span></div>
+        <div class="row"><span class="lbl"><span class="k">├─ 服务专栏</span></span><span class="cnt">78 个服务</span></div>
+        <div class="row"><span class="lbl"><span class="k">└─ 更多</span></span><span class="cnt">面试题 · 认证</span></div>
       </div>
       <div class="feat">
         <div class="feat-item">
@@ -455,14 +467,14 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
       <h2>做实验时最需要的几个细节</h2>
       <p>照着敲命令时，差一个字符就跑不通。这里的命令块按「可直接执行」的标准整理。</p>
     </div>
-    <div class="feat" style="margin-top:26px">
-      <div class="feat-item">
+    <div class="feat feat-3" style="margin-top:26px">
+      <div class="feat-item wide">
         <div class="num">A</div>
         <div>
           <h4>命令块：原文进、原文出</h4>
           <p>下面这类多行配置，整段一起复制，粘贴到终端即可生成文件，不需要手工补行。</p>
-          <div class="code" style="margin-top:12px">
-<span class="c"># 生成 MariaDB 归档源，一次粘贴即可</span>
+          <div class="code-wrap" style="margin-top:14px">
+            <div class="code"><span class="c"># 生成 MariaDB 归档源，一次粘贴即可</span>
 <span class="p">$</span> cat &gt; /etc/yum.repos.d/MariaDB.repo &lt;&lt;'EOF'
 [mariadb]
 name = MariaDB 10.5.26 Archive
@@ -470,14 +482,14 @@ baseurl = https://archive.mariadb.org/mariadb-10.5.26/yum/centos/7/x86_64/
 gpgkey = https://supplychain.mariadb.com/MariaDB-Server-GPG-KEY
 gpgcheck = 1
 enabled = 1
-EOF
-<button class="copy" type="button" data-copy="#demoCopy">复制</button>
+EOF</div>
+            <button class="copy" type="button" data-copy="1">复制</button>
           </div>
         </div>
       </div>
       <div class="feat-item">
         <div class="num">B</div>
-        <div><h4>离线也能学</h4><p>正文数据随安装包一起发布，没网、没外网实验机，照样翻内容照着做。</p></div>
+        <div><h4>离线也能学</h4><p>安装包内置全部正文与命令，出差、内网、断网环境都不影响；内容随版本更新，不依赖在线接口。</p></div>
       </div>
       <div class="feat-item">
         <div class="num">C</div>
@@ -521,6 +533,7 @@ EOF
           <li>启动后登录账号（首次需联网激活）。</li>
           <li>从左侧「学习专栏」按 Day 1 开始，或直接搜索要用的命令。</li>
         </ol>
+        <p class="dl-tip">升级只需在软件内点「检查更新」，学习进度保留。</p>
       </div>
     </div>
   </div>
@@ -596,7 +609,10 @@ EOF
     var btn = e.target.closest("[data-copy]");
     if(!btn) return;
     var box = btn.parentElement;
-    var text = box.innerText.replace(/复制$/,"").replace(/复制/g,"").trim();
+    var clone = box.cloneNode(true);
+    var cloneBtn = clone.querySelector(".copy");
+    if(cloneBtn) cloneBtn.remove();
+    var text = clone.textContent.replace(/[ \t]+\n/g,"\n").replace(/\n{3,}/g,"\n\n").trim();
     var done = function(){ var old = btn.textContent; btn.textContent = "已复制"; setTimeout(function(){ btn.textContent = old; }, 1400); };
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
