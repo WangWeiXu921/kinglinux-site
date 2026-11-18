@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KingLinux · Linux 全栈自学工作台（Windows 桌面版）</title>
+<meta name="description" content="KingLinux 是面向 SRE / 架构师 / 讲师的 Linux 离线学习工作台：100 天学习路线、302 条基础命令、78 个服务部署、6 种数据库、296 道面试题，每条命令独立一键复制。Windows 桌面版免费下载。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ff7a3d'/%3E%3Cpath d='M8 11l5 5-5 5' stroke='%23120f14' stroke-width='2.4' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M17 21h8' stroke='%23120f14' stroke-width='2.4'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0f0d11;
+  --bg-soft:#151219;
+  --panel:#1a1620;
+  --panel-2:#211c28;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.16);
+  --ink:#efe9e1;
+  --ink-2:#b9b1a7;
+  --ink-3:#857d84;
+  --accent:#ff7a3d;
+  --accent-soft:rgba(255,122,61,.13);
+  --blue:#6fb2e8;
+  --green:#5fd08a;
+  --radius:14px;
+  --maxw:1160px;
+  --mono:"Cascadia Code","JetBrains Mono",Consolas,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;line-height:1.25;letter-spacing:-.01em}
+p{margin:0}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ---------- 顶栏 ---------- */
+.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,13,17,.86);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.top .wrap{display:flex;align-items:center;gap:14px;height:60px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:-.02em}
+.brand-mark{
+  width:27px;height:27px;border-radius:7px;background:var(--accent);
+  display:grid;place-items:center;flex:0 0 auto;
+}
+.brand-mark svg{width:15px;height:15px}
+.nav{display:none;gap:22px;margin-left:18px;font-size:14px;color:var(--ink-2)}
+.nav a{position:relative;padding:4px 0}
+.nav a:hover{color:var(--ink)}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .22s}
+.nav a:hover::after{transform:scaleX(1)}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.ver-chip{
+  font-family:var(--mono);font-size:12px;color:var(--ink-2);
+  border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:9px;padding:10px 18px;font-size:14px;font-weight:650;
+  border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:#1a1013;border-color:var(--accent)}
+.btn-primary:hover{background:#ff8c56}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:7px 13px;font-size:13px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{
+  content:"";position:absolute;inset:-40% 0 auto 0;height:640px;pointer-events:none;
+  background:radial-gradient(52% 60% at 22% 40%,rgba(255,122,61,.16),transparent 70%),
+             radial-gradient(46% 55% at 78% 20%,rgba(111,178,232,.10),transparent 72%);
+}
+.hero .wrap{position:relative;padding-top:46px;padding-bottom:52px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--accent);
+  background:var(--accent-soft);border:1px solid rgba(255,122,61,.28);
+  border-radius:999px;padding:5px 12px;margin-bottom:20px;font-weight:600;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero h1{font-size:32px;font-weight:820;max-width:17em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-lead{margin-top:16px;color:var(--ink-2);font-size:15.5px;max-width:38em}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:22px;font-size:13px;color:var(--ink-3)}
+.hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.hero-meta svg{width:14px;height:14px;opacity:.7}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero-cta .btn-primary{padding:13px 24px;font-size:15px}
+.hero-cta .btn-ghost{padding:13px 22px;font-size:15px}
+
+/* 截图窗 */
+.shot{
+  margin-top:34px;border:1px solid var(--line-strong);border-radius:12px;
+  overflow:hidden;background:var(--panel);
+  box-shadow:0 26px 60px -30px rgba(0,0,0,.9);
+}
+.shot-bar{
+  display:flex;align-items:center;gap:7px;height:34px;padding:0 12px;
+  background:#241d29;border-bottom:1px solid var(--line);
+}
+.tl{width:9px;height:9px;border-radius:50%}
+.tl.r{background:#ff6b5e}.tl.y{background:#f6c14b}.tl.g{background:#57c96b}
+.shot-title{margin-left:8px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.02em}
+.shot img{width:100%;height:auto}
+
+/* 双图 */
+.shot-pair{display:grid;gap:14px;margin-top:14px}
+.shot-pair .shot{margin-top:0}
+
+/* ---------- 数字条 ---------- */
+.stats{border-bottom:1px solid var(--line);background:var(--bg-soft)}
+.stats .wrap{padding-top:30px;padding-bottom:30px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.stat{background:var(--panel);padding:16px 16px 15px}
+.stat b{display:block;font-family:var(--mono);font-size:23px;font-weight:700;letter-spacing:-.02em}
+.stat b i{font-style:normal;font-size:13px;color:var(--ink-3);margin-left:2px}
+.stat span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-3)}
+
+/* ---------- 通用区块 ---------- */
+section{scroll-margin-top:74px}
+.sec .wrap{padding-top:64px;padding-bottom:64px}
+.sec-head{max-width:44em}
+.sec-kicker{font-size:12.5px;color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sec-head h2{margin-top:10px;font-size:26px;font-weight:800}
+.sec-head p{margin-top:12px;color:var(--ink-2);font-size:15px}
+
+/* 卡片网格 */
+.grid{display:grid;gap:14px;margin-top:30px}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px;transition:border-color .18s,background .18s,transform .18s;
+}
+.card:hover{border-color:rgba(255,122,61,.4);background:var(--panel-2)}
+.card .ic{
+  width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:var(--accent-soft);border:1px solid rgba(255,122,61,.24);margin-bottom:14px;
+}
+.card .ic svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.8}
+.card h3{font-size:16.5px;font-weight:720}
+.card p{margin-top:8px;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.card ul{margin:10px 0 0;padding-left:0;list-style:none;font-size:13px;color:var(--ink-3)}
+.card ul li{padding-left:14px;position:relative;margin-top:4px}
+.card ul li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:1.5px;background:var(--ink-3)}
+
+/* 目录树面板 */
+.tree-wrap{display:grid;gap:20px;margin-top:30px}
+.tree{
+  font-family:var(--mono);font-size:13px;line-height:2;
+  background:#120f16;border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:18px 18px 20px;overflow-x:auto;
+}
+.tree b{color:var(--accent);font-weight:600}
+.tree .k{color:var(--ink)}
+.tree .c{color:var(--ink-3)}
+.tree .n{color:var(--blue)}
+.tree .row{white-space:pre}
+
+/* 特性列表 */
+.feat{display:grid;gap:16px;margin-top:30px}
+.feat-item{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px}
+.feat-item .num{
+  font-family:var(--mono);font-size:13px;color:var(--accent);
+  border:1px solid rgba(255,122,61,.34);border-radius:8px;height:30px;display:grid;place-items:center;
+}
+.feat-item h4{font-size:15px;font-weight:700}
+.feat-item p{margin-top:5px;font-size:13.5px;color:var(--ink-2)}
+
+/* 命令块演示 */
+.code{
+  font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d7e1ee;
+  background:#0c0a10;border:1px solid var(--line-strong);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;position:relative;
+}
+.code .c{color:#7d8598}
+.code .p{color:var(--accent)}
+.code .copy{
+  position:absolute;top:10px;right:10px;font-family:inherit;font-size:11px;
+  color:#c9c2ba;background:#241f2b;border:1px solid var(--line-strong);border-radius:6px;padding:2px 8px;cursor:pointer;
+}
+.code .copy:hover{color:#fff;border-color:var(--accent)}
+
+/* ---------- 下载 ---------- */
+.dl{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dl .wrap{padding-top:64px;padding-bottom:64px}
+.dl-card{
+  margin-top:28px;display:grid;gap:26px;
+  background:linear-gradient(180deg,#1e1822,#171319);
+  border:1px solid rgba(255,122,61,.28);border-radius:18px;padding:26px 22px;
+  box-shadow:0 30px 70px -40px rgba(255,122,61,.35);
+}
+.dl-main h3{font-size:21px;font-weight:800}
+.dl-main .sub{margin-top:8px;font-size:13.5px;color:var(--ink-2)}
+.dl-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:18px;font-size:13px}
+.dl-facts dt{color:var(--ink-3)}
+.dl-facts dd{margin:0;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+.dl-btn{width:100%;margin-top:20px;padding:15px 20px;font-size:15.5px}
+.dl-note{margin-top:12px;font-size:12.5px;color:var(--ink-3);text-align:center}
+.dl-side{border-top:1px solid var(--line);padding-top:20px}
+.dl-side h4{font-size:14px;font-weight:700;color:var(--ink-2)}
+.steps{margin:12px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding-left:30px;font-size:13px;color:var(--ink-2);margin-top:12px}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:-1px;width:20px;height:20px;border-radius:50%;
+  background:var(--accent-soft);border:1px solid rgba(255,122,61,.3);color:var(--accent);
+  font-family:var(--mono);font-size:11.5px;display:grid;place-items:center;
+}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:10px;margin-top:30px}
+.faq details{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 18px;
+}
+.faq details[open]{border-color:rgba(255,122,61,.32);background:var(--panel-2)}
+.faq summary{
+  cursor:pointer;list-style:none;padding:16px 0;font-size:14.5px;font-weight:640;
+  display:flex;align-items:center;gap:10px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";margin-left:auto;width:9px;height:9px;border-right:1.5px solid var(--ink-3);border-bottom:1.5px solid var(--ink-3);
+  transform:rotate(45deg);transition:transform .2s;flex:0 0 auto;
+}
+.faq details[open] summary::after{transform:rotate(-135deg)}
+.faq .ans{padding:0 0 18px;font-size:13.5px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:14px}
+
+/* ---------- 页脚 ---------- */
+footer{padding:44px 0 56px;border-top:1px solid var(--line)}
+.foot{display:flex;flex-wrap:wrap;gap:18px 34px;align-items:flex-start;justify-content:space-between;font-size:13px;color:var(--ink-3)}
+.foot a:hover{color:var(--accent)}
+.foot .col{display:grid;gap:8px}
+.foot .col strong{color:var(--ink-2);font-size:13px;font-weight:650}
+.copy-line{margin-top:26px;font-size:12.5px;color:var(--ink-3)}
+
+/* ---------- 响应式 ---------- */
+@media (min-width:560px){
+  .hero h1{font-size:38px}
+  .shot-pair{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
+  .dl-card{grid-template-columns:1.35fr .65fr}
+  .dl-side{border-top:none;border-left:1px solid var(--line);padding-top:0;padding-left:22px}
+}
+@media (min-width:820px){
+  .wrap{padding:0 28px}
+  .nav{display:flex}
+  .hero .wrap{padding-top:58px}
+  .hero h1{font-size:46px}
+  .hero-lead{font-size:16.5px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:16px}
+  .tree-wrap{grid-template-columns:1fr 1fr;align-items:start}
+  .feat{grid-template-columns:1fr 1fr}
+  .dl-card{padding:32px 30px}
+  .dl-main h3{font-size:24px}
+}
+@media (min-width:1024px){
+  .hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+  .hero-visual{margin-top:0}
+  .shot{margin-top:0}
+  .sec .wrap{padding-top:76px;padding-bottom:76px}
+  .sec-head h2{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 8l4 4-4 4" stroke="#160f12" stroke-width="2.2" fill="none" stroke-linejoin="round"/><path d="M12 16h7" stroke="#160f12" stroke-width="2.2"/></svg>
+      </span>
+      KingLinux
+    </div>
+    <nav class="nav" aria-label="主导航">
+      <a href="#capability">能做什么</a>
+      <a href="#contents">内容目录</a>
+      <a href="#detail">使用细节</a>
+      <a href="#download">下载</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <div class="top-right">
+      <span class="ver-chip" id="topVer">v3.2.7</span>
+      <a class="btn btn-primary btn-sm" href="#download">下载 Windows 版</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="eyebrow"><span class="dot"></span>Windows 桌面软件 · 离线可用 · 自动更新</div>
+      <h1>从零基础到 <em>SRE</em> 的 Linux 全栈自学工作台</h1>
+      <p class="hero-lead">
+        把基础命令、Shell 与 Python 自动化、78 个服务部署、6 种数据库、100 天学习路线和 296 道面试题放进一个桌面软件里。
+        每条命令都能单独复制，断网也能照着做实验。
+      </p>
+      <div class="hero-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>Windows 10 / 11 64 位</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg><span id="heroSize">约 118 MB</span></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>安装后无需联网</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" id="heroDl" href="#download">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg>
+          下载安装包
+        </a>
+        <a class="btn btn-ghost" href="#capability">看看里面有什么</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="shot">
+        <div class="shot-bar">
+          <span class="tl r"></span><span class="tl y"></span><span class="tl g"></span>
+          <span class="shot-title">KingLinux — 首页</span>
+        </div>
+        <img src="assets/home.jpg" alt="KingLinux 首页界面：数据总览、学习进度与推荐路径" width="1400" height="848">
+      </div>
+      <div class="shot-pair">
+        <div class="shot">
+          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">Day 50 · Zabbix 5.0</span></div>
+          <img src="assets/day.jpg" alt="Day 50 Zabbix 5.0 监控系统详解页面" width="1400" height="848" loading="lazy">
+        </div>
+        <div class="shot">
+          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">命令块 · 一键复制</span></div>
+          <img src="assets/cmd.jpg" alt="深色命令块，每块带独立复制按钮" width="1300" height="788" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat"><b>100<i>天</i></b><span>学习路线，逐天推进</span></div>
+      <div class="stat"><b>302<i>条</i></b><span>基础命令，逐条讲透</span></div>
+      <div class="stat"><b>78<i>个</i></b><span>服务部署，按安装方式分讲</span></div>
+      <div class="stat"><b>6<i>种</i></b><span>数据库：MySQL / Oracle / PG / SQLServer / 达梦 / Redis</span></div>
+      <div class="stat"><b>296<i>道</i></b><span>面试题，带解析</span></div>
+      <div class="stat"><b>492<i>条</i></b><span>安装方式条目，可照做</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="capability">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Capability</div>
+      <h2>一个软件，把 Linux 该学的都装进去</h2>
+      <p>不是网页笔记合集，是能离线跑的桌面工作台：左侧树形目录、命令级复制、内容随版本更新。</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+        <h3>基础命令库</h3>
+        <p>302 条命令，按文件、权限、进程、网络、磁盘分组。每条给用途、常用参数、真实示例和踩坑点。</p>
+        <ul><li>文件与目录、权限与属主</li><li>进程与端口、磁盘与文件系统</li><li>网络排查与抓包命令</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.6"/><rect x="3" y="14" width="18" height="6" rx="1.6"/><path d="M7 7h.01M7 17h.01"/></svg></div>
+        <h3>服务部署专栏</h3>
+        <p>78 个服务，按安装方式分开讲：YUM、源码编译、二进制、Docker、离线包等，每一步都配命令。</p>
+        <ul><li>Nginx / Tomcat / MySQL / Redis 等常用服务</li><li>高可用与集群组件</li><li>配置片段完整保留，不截断</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V7m0 12h6l4-6 4 6h4"/><circle cx="20" cy="19" r="1.2"/></svg></div>
+        <h3>100 天学习路线</h3>
+        <p>Day 1 装系统到 Day 100 高可用架构，每天有目标、知识点、可执行命令和当天自测。</p>
+        <ul><li>进度自动记录，续学接着上次</li><li>每天内容可单独跳转</li><li>章节按天编号，便于排期</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6"/><path d="M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg></div>
+        <h3>数据库专栏</h3>
+        <p>MySQL、Oracle、PostgreSQL、SQL Server、达梦、Redis 六个独立栏目，安装、建库、备份、主从、调优分开写。</p>
+        <ul><li>国产库达梦单独成栏</li><li>备份恢复与主从复制</li><li>常用 SQL 与运维命令</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 4h9l3 3v13H8z"/><path d="M8 4H4v16h4"/><path d="M11 11h6M11 15h4"/></svg></div>
+        <h3>面试题库</h3>
+        <p>296 道题带解析，覆盖 Linux 基础、网络、数据库、故障排查与运维场景，可按模块刷。</p>
+        <ul><li>每题附考点与解析</li><li>按方向分类整理</li><li>适合面试前集中过一遍</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18"/><rect x="5" y="11" width="3.4" height="9"/><rect x="10.3" y="7" width="3.4" height="13"/><rect x="15.6" y="13" width="3.4" height="7"/></svg></div>
+        <h3>SRE 与架构专栏</h3>
+        <p>监控告警、日志体系、集群与高可用、性能与容量、故障复盘模板，接到真实运维场景。</p>
+        <ul><li>Zabbix / Prometheus 监控落地</li><li>集群与负载均衡组合方案</li><li>综合实验与项目串讲</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contents">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Contents</div>
+      <h2>左侧树形目录，和 VS Code 一样的找内容方式</h2>
+      <p>栏目按能力分层，不会在一堆长文里翻。想找命令直接搜索，想系统学就按天走。</p>
+    </div>
+    <div class="tree-wrap">
+      <div class="tree" role="img" aria-label="KingLinux 左侧目录结构示例">
+        <div class="row"><b>KingLinux</b></div>
+<div class="row">├─ <span class="k">入门基础</span>          <span class="c">14 章</span></div>
+<div class="row">├─ <span class="k">Shell 编程精讲</span>     <span class="c">14 章</span></div>
+<div class="row">├─ <span class="k">Python 自动化</span>      <span class="c">13 章</span></div>
+<div class="row">├─ <span class="k">数据库专栏</span></div>
+<div class="row">│   ├─ MySQL <span class="c">·</span> Oracle <span class="c">·</span> PostgreSQL</div>
+<div class="row">│   ├─ SQL Server <span class="c">·</span> 达梦 <span class="c">·</span> Redis</div>
+<div class="row">│   └─ <span class="c">安装 / 建库 / 备份 / 主从 / 调优</span></div>
+<div class="row">├─ <span class="k">核心能力</span>          <span class="c">SRE · 架构 · 项目管理</span></div>
+<div class="row">├─ <span class="k">学习专栏</span>          <span class="n">Day 1 – 100</span></div>
+<div class="row">├─ <span class="k">服务专栏</span>          <span class="c">78 个服务</span></div>
+<div class="row">└─ <span class="k">更多</span>              <span class="c">面试题 · 认证 · 综合实验</span></div>
+      </div>
+      <div class="feat">
+        <div class="feat-item">
+          <div class="num">01</div>
+          <div><h4>搜索直达</h4><p>命令、服务、数据库、题目统一检索，输入 <code>grep</code> 或「主从」就能定位到具体章节。</p></div>
+        </div>
+        <div class="feat-item">
+          <div class="num">02</div>
+          <div><h4>按天推进</h4><p>100 天路线自带进度与打卡，完成天数、连续打卡和下一步都显示在首页。</p></div>
+        </div>
+        <div class="feat-item">
+          <div class="num">03</div>
+          <div><h4>一键复制</h4><p>每个命令块右上角独立复制按钮，复制出来就是能直接粘进终端的原文。</p></div>
+        </div>
+        <div class="feat-item">
+          <div class="num">04</div>
+          <div><h4>完整不截断</h4><p>XML 配置、here-doc 多行脚本、systemd 单元这些长块整段保留，不会出现空框或缺行。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="detail">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Detail</div>
+      <h2>做实验时最需要的几个细节</h2>
+      <p>照着敲命令时，差一个字符就跑不通。这里的命令块按「可直接执行」的标准整理。</p>
+    </div>
+    <div class="feat" style="margin-top:26px">
+      <div class="feat-item">
+        <div class="num">A</div>
+        <div>
+          <h4>命令块：原文进、原文出</h4>
+          <p>下面这类多行配置，整段一起复制，粘贴到终端即可生成文件，不需要手工补行。</p>
+          <div class="code" style="margin-top:12px">
+<span class="c"># 生成 MariaDB 归档源，一次粘贴即可</span>
+<span class="p">$</span> cat &gt; /etc/yum.repos.d/MariaDB.repo &lt;&lt;'EOF'
+[mariadb]
+name = MariaDB 10.5.26 Archive
+baseurl = https://archive.mariadb.org/mariadb-10.5.26/yum/centos/7/x86_64/
+gpgkey = https://supplychain.mariadb.com/MariaDB-Server-GPG-KEY
+gpgcheck = 1
+enabled = 1
+EOF
+<button class="copy" type="button" data-copy="#demoCopy">复制</button>
+          </div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="num">B</div>
+        <div><h4>离线也能学</h4><p>正文数据随安装包一起发布，没网、没外网实验机，照样翻内容照着做。</p></div>
+      </div>
+      <div class="feat-item">
+        <div class="num">C</div>
+        <div><h4>软件内升级</h4><p>右上角「检查更新」拉取新版本，带下载进度，不用等别人重新发安装包给你。</p></div>
+      </div>
+      <div class="feat-item">
+        <div class="num">D</div>
+        <div><h4>看得舒服</h4><p>日间 / 夜间主题一键切换，字号可调，长时间看命令不吃力。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dl" id="download">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Download</div>
+      <h2>下载 Windows 桌面版</h2>
+      <p>安装包只含程序本体与学习内容，安装后本地运行，不需要浏览器打开。</p>
+    </div>
+    <div class="dl-card">
+      <div class="dl-main">
+        <h3>KingLinux <span id="dlVer">v3.2.7</span></h3>
+        <p class="sub">Windows 桌面安装包 · 已包含 100 天路线与全部命令内容</p>
+        <dl class="dl-facts">
+          <dt>适用系统</dt><dd>Windows 10 / 11（64 位）</dd>
+          <dt>安装包大小</dt><dd id="dlSize">约 118 MB</dd>
+          <dt>更新日期</dt><dd id="dlDate">2026-11-18</dd>
+          <dt>安装方式</dt><dd>EXE 安装，可选目录</dd>
+        </dl>
+        <a class="btn btn-primary dl-btn" id="dlBtn" href="https://github.com/WangWeiXu921/kinglinux-site/releases/latest/download/KingLinux-Setup-3.2.7.exe">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg>
+          下载安装包
+        </a>
+        <p class="dl-note" id="dlNote">点击后开始下载，文件较大请留意网络</p>
+      </div>
+      <div class="dl-side">
+        <h4>安装与开始</h4>
+        <ol class="steps">
+          <li>下载 EXE，双击运行，按向导选择安装目录。</li>
+          <li>启动后登录账号（首次需联网激活）。</li>
+          <li>从左侧「学习专栏」按 Day 1 开始，或直接搜索要用的命令。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">FAQ</div>
+      <h2>常见问题</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>一定要联网才能用吗？</summary>
+        <div class="ans">不需要。只有首次登录激活、以及点「检查更新」时需要网络。日常翻内容、复制命令、做本地实验都可以断网进行。</div>
+      </details>
+      <details>
+        <summary>支持 macOS 或 Linux 桌面吗？</summary>
+        <div class="ans">当前只提供 Windows 10 / 11 64 位安装包，原生 Windows 桌面程序，不是网页。其它系统暂未提供。</div>
+      </details>
+      <details>
+        <summary>以后更新要重新下载安装包吗？</summary>
+        <div class="ans">不用。软件内点「检查更新」即可下载并安装新版本，学习内容和进度都会保留。也可以在本页重新下载最新安装包覆盖安装。</div>
+      </details>
+      <details>
+        <summary>换电脑了，内容还在吗？</summary>
+        <div class="ans">用同一账号登录即可继续使用，学习进度按账号记录；账号与激活状态跟随你的账号，不绑定单台机器。</div>
+      </details>
+      <details>
+        <summary>我的学习数据会被上传吗？</summary>
+        <div class="ans">笔记、收藏、进度默认保存在本机配置目录，仅在需要账号同步时使用账号信息，不上传笔记内容。</div>
+      </details>
+      <details>
+        <summary>内容会一直更新吗？</summary>
+        <div class="ans">会。新增或改写的章节随版本发布，例如最近整篇重写了 Day 50「Zabbix 5.0 监控系统详解」，补齐了全栈部署、速查脚本与故障排查表。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="col">
+        <strong>KingLinux</strong>
+        <span>Linux 全栈自学工作台 · Windows 桌面版</span>
+        <span id="footVer">当前版本 v3.2.7</span>
+      </div>
+      <div class="col">
+        <strong>本站</strong>
+        <a href="#capability">能做什么</a>
+        <a href="#contents">内容目录</a>
+        <a href="#download">下载</a>
+        <a href="#faq">常见问题</a>
+      </div>
+      <div class="col">
+        <strong>下载</strong>
+        <a id="footDl" href="https://github.com/WangWeiXu921/kinglinux-site/releases">全部版本</a>
+        <a href="https://github.com/WangWeiXu921/kinglinux-site">站点仓库</a>
+      </div>
+    </div>
+    <p class="copy-line">© <span id="year">2026</span> KingLinux · 站点与安装包由作者维护，内容受版权保护，请勿二次分发修改版。</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var REPO = "WangWeiXu921/kinglinux-site";
+
+  /* 复制演示命令块 */
+  document.addEventListener("click", function(e){
+    var btn = e.target.closest("[data-copy]");
+    if(!btn) return;
+    var box = btn.parentElement;
+    var text = box.innerText.replace(/复制$/,"").replace(/复制/g,"").trim();
+    var done = function(){ var old = btn.textContent; btn.textContent = "已复制"; setTimeout(function(){ btn.textContent = old; }, 1400); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+    } else { fallback(text, done); }
+  });
+  function fallback(text, done){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  /* 平滑锚点 */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href");
+      if(id.length < 2) return;
+      var el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      el.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  });
+
+  /* 读取最新发布信息，更新版本 / 大小 / 下载链接 */
+  var MB = function(b){ return (b/1048576).toFixed(0) + " MB"; };
+  fetch("https://api.github.com/repos/" + REPO + "/releases/latest", {headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){ if(!r.ok) throw new Error("http"); return r.json(); })
+    .then(function(rel){
+      var tag = rel.tag_name || "";
+      var main = (rel.assets || []).filter(function(a){ return /\.exe$/i.test(a.name); })[0];
+      if(tag){
+        ["dlVer","topVer","footVer"].forEach(function(id){
+          var el = document.getElementById(id);
+          if(el) el.textContent = (id === "footVer" ? "当前版本 " : "") + tag;
+        });
+      }
+      if(main){
+        var btn = document.getElementById("dlBtn");
+        btn.href = main.browser_download_url;
+        document.getElementById("dlSize").textContent = MB(main.size) + "（" + main.size.toLocaleString() + " 字节）";
+        document.getElementById("heroSize").textContent = MB(main.size);
+        var note = document.getElementById("dlNote");
+        note.textContent = "文件名 " + main.name + " · 下载后双击安装";
+      }
+      if(rel.published_at){
+        var d = new Date(rel.published_at);
+        var t = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+        document.getElementById("dlDate").textContent = t;
+      }
+    })
+    .catch(function(){
+      var note = document.getElementById("dlNote");
+      if(note) note.textContent = "点击后开始下载；若链接失效，可前往版本列表手动下载";
+    });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
