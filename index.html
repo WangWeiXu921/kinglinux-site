@@ -350,8 +350,8 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
       </div>
       <div class="shot-pair">
         <div class="shot">
-          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">内容页 · 逐条命令讲解</span></div>
-          <img src="assets/day.jpg" alt="Day 50 Zabbix 5.0 监控系统详解页面" width="1400" height="848" loading="lazy">
+          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">服务部署 · 78 个服务分讲</span></div>
+          <img src="assets/svcs.jpg" alt="服务目录页，78 个服务按类别分组，标注支持的安装方式" width="1400" height="848" loading="lazy">
         </div>
         <div class="shot">
           <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">命令块 · 一键复制</span></div>
@@ -537,7 +537,7 @@ EOF</div>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg>
           下载安装包
         </a>
-        <p class="dl-note" id="dlNote">点击后开始下载，文件较大请留意网络</p>
+        <p class="dl-note" id="dlNote">下载后双击安装；遇“未知发布者”提示时选“更多信息 → 仍要运行”</p>
       </div>
       <div class="dl-side">
         <h4>安装与开始</h4>
@@ -664,8 +664,6 @@ EOF</div>
       if(sizeEl) sizeEl.textContent = MB(main.size) + "（" + main.size.toLocaleString() + " 字节）";
       var heroSize = document.getElementById("heroSize");
       if(heroSize) heroSize.textContent = MB(main.size);
-      var note = document.getElementById("dlNote");
-      if(note) note.textContent = "文件名 " + main.name + " · 下载后双击安装";
       var shaEl = document.getElementById("dlSha");
       if(shaEl && main.digest && main.digest.indexOf("sha256:") === 0){
         shaEl.textContent = main.digest.slice(7);
@@ -676,10 +674,7 @@ EOF</div>
         var de = document.getElementById("dlDate"); if(de) de.textContent = t;
       }
     })
-    .catch(function(){
-      var note = document.getElementById("dlNote");
-      if(note) note.innerHTML = '接口暂时连不上，可直接到 <a href="' + REPO_URL + '/releases" style="color:#ff7a3d;text-decoration:underline">版本列表</a> 手动下载；页面上的大小与校验值仍为最近一次发布的数据。';
-    });
+    .catch(function(){ /* 静默降级：按钮已指向 release 直链，静态信息照常可用 */ });
 
   /* 复制 SHA256 */
   var hashBtn = document.querySelector("[data-copy-hash]");
