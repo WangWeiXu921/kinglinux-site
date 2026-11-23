@@ -58,10 +58,6 @@ p{margin:0}
 .nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .22s}
 .nav a:hover::after{transform:scaleX(1)}
 .top-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.ver-chip{
-  font-family:var(--mono);font-size:12px;color:var(--ink-2);
-  border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap;
-}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   border-radius:9px;padding:10px 18px;font-size:14px;font-weight:650;
@@ -212,6 +208,19 @@ section{scroll-margin-top:74px}
 .dl-facts dd{margin:0;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
 .dl-btn{width:100%;margin-top:20px;padding:15px 20px;font-size:15.5px}
 .dl-note{margin-top:12px;font-size:12.5px;color:var(--ink-3);text-align:center}
+.dl-hash{
+  display:flex;align-items:center;gap:10px;margin-top:14px;
+  background:#0c0a10;border:1px solid var(--line-strong);border-radius:9px;padding:9px 12px;
+}
+.dl-hash .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--accent);flex:0 0 auto}
+.dl-hash code{font-family:var(--mono);font-size:11.5px;color:#c9c2ba;line-height:1.6;flex:1;min-width:0;overflow-wrap:anywhere}
+.dl-hash button{
+  flex:0 0 auto;font-family:var(--mono);font-size:11px;color:#c9c2ba;background:#241f2b;
+  border:1px solid var(--line-strong);border-radius:6px;padding:3px 9px;cursor:pointer;
+}
+.dl-hash button:hover{color:#fff;border-color:var(--accent)}
+.dl-verify{margin-top:9px;font-size:12px;color:var(--ink-3);line-height:1.75}
+.dl-verify code{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:#0c0a10;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
 .dl-side{border-top:1px solid var(--line);padding-top:20px}
 .dl-side h4{font-size:14px;font-weight:700;color:var(--ink-2)}
 .steps{margin:12px 0 0;padding:0;list-style:none;counter-reset:s}
@@ -251,7 +260,6 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
 
 /* ---------- 响应式 ---------- */
 @media (max-width:559px){
-  .ver-chip{display:none}
   .hero h1{font-size:29px}
 }
 @media (min-width:560px){
@@ -305,7 +313,6 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
       <a href="#faq">常见问题</a>
     </nav>
     <div class="top-right">
-      <span class="ver-chip" id="topVer">v3.2.7</span>
       <a class="btn btn-primary btn-sm" href="#download">下载 Windows 版</a>
     </div>
   </div>
@@ -343,7 +350,7 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line)}
       </div>
       <div class="shot-pair">
         <div class="shot">
-          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">Day 50 · Zabbix 5.0</span></div>
+          <div class="shot-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="shot-title">内容页 · 逐条命令讲解</span></div>
           <img src="assets/day.jpg" alt="Day 50 Zabbix 5.0 监控系统详解页面" width="1400" height="848" loading="lazy">
         </div>
         <div class="shot">
@@ -512,7 +519,7 @@ EOF</div>
     </div>
     <div class="dl-card">
       <div class="dl-main">
-        <h3>KingLinux <span id="dlVer">v3.2.7</span></h3>
+        <h3>KingLinux Windows 版</h3>
         <p class="sub">Windows 桌面安装包 · 已包含 100 天路线与全部命令内容</p>
         <dl class="dl-facts">
           <dt>适用系统</dt><dd>Windows 10 / 11（64 位）</dd>
@@ -520,6 +527,12 @@ EOF</div>
           <dt>更新日期</dt><dd id="dlDate">2026-11-18</dd>
           <dt>安装方式</dt><dd>EXE 安装，可选目录</dd>
         </dl>
+        <div class="dl-hash">
+          <span class="lab">SHA256</span>
+          <code id="dlSha">63a449cf0fd796010dea1b3336047ebb61977dc86f7d56ac1cf133aaa4ffe9ef</code>
+          <button type="button" data-copy-hash>复制</button>
+        </div>
+        <p class="dl-verify">下载后校验：把安装包放到任意目录，执行 <code>certutil -hashfile 文件名 SHA256</code>，输出值与上面一致，说明文件没被改动过。</p>
         <a class="btn btn-primary dl-btn" id="dlBtn" href="https://github.com/WangWeiXu921/kinglinux-site/releases/latest/download/KingLinux-Setup-3.2.7.exe">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg>
           下载安装包
@@ -580,7 +593,6 @@ EOF</div>
       <div class="col">
         <strong>KingLinux</strong>
         <span>Linux 全栈自学工作台 · Windows 桌面版</span>
-        <span id="footVer">当前版本 v3.2.7</span>
       </div>
       <div class="col">
         <strong>本站</strong>
@@ -638,37 +650,50 @@ EOF</div>
     });
   });
 
-  /* 读取最新发布信息，更新版本 / 大小 / 下载链接 */
+  /* 读取最新发布信息：只同步大小 / 日期 / 下载链接 / 校验值，页面本身不显示版本号 */
   var MB = function(b){ return (b/1048576).toFixed(0) + " MB"; };
+  var REPO_URL = "https://github.com/" + REPO;
   fetch("https://api.github.com/repos/" + REPO + "/releases/latest", {headers:{Accept:"application/vnd.github+json"}})
     .then(function(r){ if(!r.ok) throw new Error("http"); return r.json(); })
     .then(function(rel){
-      var tag = rel.tag_name || "";
       var main = (rel.assets || []).filter(function(a){ return /\.exe$/i.test(a.name); })[0];
-      if(tag){
-        ["dlVer","topVer","footVer"].forEach(function(id){
-          var el = document.getElementById(id);
-          if(el) el.textContent = (id === "footVer" ? "当前版本 " : "") + tag;
-        });
-      }
-      if(main){
-        var btn = document.getElementById("dlBtn");
-        btn.href = main.browser_download_url;
-        document.getElementById("dlSize").textContent = MB(main.size) + "（" + main.size.toLocaleString() + " 字节）";
-        document.getElementById("heroSize").textContent = MB(main.size);
-        var note = document.getElementById("dlNote");
-        note.textContent = "文件名 " + main.name + " · 下载后双击安装";
+      if(!main) throw new Error("no-asset");
+      var btn = document.getElementById("dlBtn");
+      if(btn) btn.href = main.browser_download_url;
+      var sizeEl = document.getElementById("dlSize");
+      if(sizeEl) sizeEl.textContent = MB(main.size) + "（" + main.size.toLocaleString() + " 字节）";
+      var heroSize = document.getElementById("heroSize");
+      if(heroSize) heroSize.textContent = MB(main.size);
+      var note = document.getElementById("dlNote");
+      if(note) note.textContent = "文件名 " + main.name + " · 下载后双击安装";
+      var shaEl = document.getElementById("dlSha");
+      if(shaEl && main.digest && main.digest.indexOf("sha256:") === 0){
+        shaEl.textContent = main.digest.slice(7);
       }
       if(rel.published_at){
         var d = new Date(rel.published_at);
         var t = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
-        document.getElementById("dlDate").textContent = t;
+        var de = document.getElementById("dlDate"); if(de) de.textContent = t;
       }
     })
     .catch(function(){
       var note = document.getElementById("dlNote");
-      if(note) note.textContent = "点击后开始下载；若链接失效，可前往版本列表手动下载";
+      if(note) note.innerHTML = '接口暂时连不上，可直接到 <a href="' + REPO_URL + '/releases" style="color:#ff7a3d;text-decoration:underline">版本列表</a> 手动下载；页面上的大小与校验值仍为最近一次发布的数据。';
     });
+
+  /* 复制 SHA256 */
+  var hashBtn = document.querySelector("[data-copy-hash]");
+  if(hashBtn){
+    hashBtn.addEventListener("click", function(){
+      var el = document.getElementById("dlSha");
+      var val = el ? el.textContent.trim() : "";
+      if(!val) return;
+      var done = function(){ hashBtn.textContent = "已复制"; setTimeout(function(){ hashBtn.textContent = "复制"; }, 1400); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(val).then(done, function(){ done(); });
+      } else { done(); }
+    });
+  }
 
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
